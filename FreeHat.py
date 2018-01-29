@@ -1,6 +1,7 @@
 ####################
 # Nick Miethe
 # 4/20/2017
+# Simple test reddit bot which randomly posts a specified comment
 ####################
 
 #!/usr/bin/python
