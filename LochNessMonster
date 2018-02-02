@@ -1,0 +1,62 @@
+####################
+# Nick Miethe
+# 4/20/2017
+####################
+
+#!/usr/bin/python
+import praw
+import time
+import random
+import freeHat
+
+posts_replied_to = []
+
+def getSub(reddit):
+	subreddit = reddit.subreddit('random')
+	return subreddit
+
+def comment(subreddit):
+	for comment in subreddit.comments(limit=1000):
+		try:
+			monster = ["...Uh I need about tree-fitty.", 
+				"I ain't giving you no tree-fitty you goddamn Loch Ness monster! Get your own goddamn money!",
+				"What do you want from us, monster?!", 
+				"/u/"+str(comment.author.name)+", what on earth is that creature?!",
+				"/u/"+str(comment.author.name)+" gave him a dollar",
+				"How would you like to buy some cookies?",
+				"We'll take a graham crunch. How much will that be? And /u/"+str(comment.author.name)+ " looks at me and says, ...Uh I need about tree-fitty.",
+				"Well, it was about that time that I notice that girl scout was about eight stories tall and was a crustacean from the protozoic era.",
+				"Dammit monster! Get off my lawn! I ain't giving you no tree-fitty!",
+				"How about just two-fitty?",
+				"Oh, now it's only two-fitty!! What?! Is there a sale on Loch Ness munchies or something?!",
+				"Dammit monster! You stop bugging my children now! We work for our money in this house and we don't give money away!",
+				"What do you want from me, alien?!",
+				"And so I realized I that it wasn't no alien, it was that God-damned Loch Ness monster again, trying to trick me into giving him tree-fitty by dressing up like an alien. Don't that just beat all?!"]
+		except:
+			monster = ["What do you want from us, monster?!"]
+		if "how much" in comment.body.lower() and comment.id not in posts_replied_to:
+			try:
+				time.sleep(15)
+				comment.reply(random.choice(monster))
+			except:
+				print "not yet"
+				time.sleep(600)
+				comment.reply(random.choice(monster))
+			finally:
+				posts_replied_to.append(comment.id)
+				print str(comment.id)
+				print str(comment.body)
+				#freeHat.main()
+				break
+			
+def main():
+
+	reddit = praw.Reddit('bot1')
+	
+	while True:
+		inSub = getSub(reddit)
+		comment(inSub)
+	
+	
+if __name__ == "__main__":
+    main()
